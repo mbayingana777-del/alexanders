@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alexander’s Restaurant | Ambridge, PA</title>
+  <meta name="description" content="Alexander’s Restaurant in historic Ambridge, PA. Menus, events, private parties, wedding rehearsal dinners, funeral luncheons, map, and contact info." />
+
+  <!--
+    HOW TO ADD OTHER PAGES LATER:
+    Create these files in the SAME folder as index.html:
+      events.html
+      menus.html
+      weddings.html
+      private-parties.html
+      funeral-luncheons.html
+      map.html
+      contact.html
+
+    Then each nav link below will work automatically.
+  -->
+
+  <style>
+    :root{
+      --bg1:#7a0000;
+      --bg2:#250000;
+      --paper:#f4f1ec;
+      --ink:#111;
+      --muted:#444;
+      --nav:#000;
+      --navText:#fff;
+      --line:#b9b0a6;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --max: 980px;
+      --radius: 10px;
+      --gold:#d6b36a;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height:1.55;
+      background:
+        radial-gradient(900px 520px at 50% 12%, rgba(255,255,255,.10), transparent 55%),
+        radial-gradient(circle at center, var(--bg1), var(--bg2));
+      min-height:100vh;
+    }
+
+    a{color:inherit}
+    img{max-width:100%; display:block}
+
+    /* Top + bottom nav bar (classic vibe) */
+    .navwrap{
+      background: var(--nav);
+      color: var(--navText);
+      border-bottom: 1px solid rgba(255,255,255,.15);
+    }
+    .nav{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 10px 14px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:18px;
+    }
+    .nav a{
+      text-decoration:none;
+      font-weight:700;
+      font-size:13px;
+      letter-spacing:.4px;
+      padding: 6px 2px;
+      color: var(--navText);
+      white-space:nowrap;
+    }
+    .nav a:hover{ text-decoration:underline; }
+
+    /* Main framed "paper" */
+    .frame{
+      max-width: var(--max);
+      margin: 34px auto;
+      background: var(--paper);
+      border: 1px solid #000;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .content{
+      padding: 26px 26px 18px;
+      background:
+        radial-gradient(900px 520px at 20% 0%, rgba(0,0,0,.04), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
+    }
+
+    /* Header area inside content */
+    .hero{
+      display:grid;
+      grid-template-columns: 340px 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    .photo{
+      border: 1px solid var(--line);
+      padding: 10px;
+      background: rgba(255,255,255,.35);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+    h1 em{ font-style:italic; }
+    p{ margin: 0 0 12px; color: var(--muted); }
+
+    .sig{
+      margin-top: 14px;
+      text-align:right;
+      color:#333;
+      font-style: italic;
+      font-size: 14px;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 18px 0;
+      opacity:.9;
+    }
+
+    /* Bottom info line */
+    .info{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap: 14px 24px;
+      padding: 12px 18px 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color:#2a2a2a;
+    }
+    .info b{ color:#000; }
+    .info a{ color:#000; text-decoration:none; }
+    .info a:hover{ text-decoration:underline; }
+
+    /* Optional classic "gold title" footer style */
+    .gold-title{
+      max-width: var(--max);
+      margin: 14px auto 28px;
+      text-align:center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: transparent;
+      background: linear-gradient(180deg, #fff1c2, var(--gold), #7a5a10);
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: 0 10px 26px rgba(0,0,0,.55);
+      padding: 6px 12px;
+    }
+
+    /* Mobile */
+    @media (max-width: 820px){
+      .hero{ grid-template-columns: 1fr; }
+      .content{ padding: 18px 16px 12px; }
+      .frame{ margin: 18px 12px; }
+      .gold-title{ font-size: 34px; margin: 10px 12px 22px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- TOP NAV (links already point to future pages) -->
+  <div class="navwrap">
+    <div class="nav" aria-label="Primary navigation">
+      <a href="index.html">HOME</a>
+      <a href="events.html">EVENTS</a>
+      <a href="menus.html">MENUS</a>
+      <a href="weddings.html">WEDDING REHEARSAL DINNERS</a>
+      <a href="private-parties.html">PRIVATE PARTIES</a>
+      <a href="funeral-luncheons.html">FUNERAL LUNCHEONS</a>
+      <a href="map.html">MAP</a>
+      <a href="contact.html">CONTACT US</a>
+    </div>
+  </div>
+
+  <!-- MAIN "PAPER" FRAME -->
+  <main class="frame" role="main">
+    <div class="content">
+      <div class="hero">
+        <!-- IMAGE: replace src with your real photo later -->
+        <div class="photo">
+          <img src="images/exterior.jpg" alt="Alexander’s Restaurant exterior" />
+          <!-- If you don't have images yet, create an images folder and add a placeholder named exterior.jpg -->
+        </div>
+
+        <div>
+          <h1>Welcome to <em>Alexander’s Restaurant</em> located in historic Ambridge.</h1>
+
+          <p>
+            Alexander’s is a borough favorite in Beaver County, Western Pennsylvania.
+            We’re proud to serve a welcoming dining experience with quality seafood, meats,
+            and classic American comfort dishes.
+          </p>
+
+          <p>
+            The Barlamas family has been in the restaurant business in Ambridge since the early 1920s.
+            With deep appreciation for our community, we invite you to enjoy the finest quality
+            dining in the greater Ambridge area.
+          </p>
+
+          <p>
+            For menus, events, private parties, wedding rehearsal dinners, and funeral luncheons,
+            use the navigation above.
+          </p>
+
+          <div class="sig">— The Alexander’s Team</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- You can add quick announcements here later -->
+      <p style="margin:0;color:#333;font-size:14px;">
+        <b>Hours:</b> Monday–Saturday 11:00am–10:00pm • Sunday: Closed (except special holidays & events)
+      </p>
+    </div>
+
+    <!-- FOOTER INFO LINE -->
+    <div class="info">
+      <span><b>Alexander’s Restaurant</b></span>
+      <span>720 Merchant Street</span>
+      <span>Ambridge, PA 15003</span>
+      <span><a href="tel:+17242663115">(724) 266-3115</a></span>
+    </div>
+
+    <!-- BOTTOM NAV (classic site style) -->
+    <div class="navwrap" style="border-top:1px solid rgba(255,255,255,.15); border-bottom:none;">
+      <div class="nav" aria-label="Secondary navigation">
+        <a href="index.html">HOME</a>
+        <a href="events.html">EVENTS</a>
+        <a href="menus.html">MENUS</a>
+        <a href="weddings.html">WEDDING REHEARSAL DINNERS</a>
+        <a href="private-parties.html">PRIVATE PARTIES</a>
+        <a href="funeral-luncheons.html">FUNERAL LUNCHEONS</a>
+        <a href="map.html">MAP</a>
+        <a href="contact.html">CONTACT US</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Optional big gold title like the original screenshot vibe -->
+  <div class="gold-title">Alexander’s Restaurant</div>
+
+  <!--
+    QUICK SETUP NOTES:
+    1) Put this index.html in a folder.
+    2) Create an "images" folder next to it.
+    3) Add an image named exterior.jpg (any jpg) to images/.
+    4) Later create the other .html pages listed above and copy the same nav + styling.
+  -->
+</body>
+</html>
