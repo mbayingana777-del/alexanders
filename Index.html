@@ -1,0 +1,1644 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- =========================================================
+       Alexander’s Restaurant — Upscaled Classic (Single Page)
+       - Professional redesign inspired by the original site
+       - Multi-page ready nav (links to other pages later)
+       - No external dependencies required
+       - Lots of structure + components (600+ lines)
+       ========================================================= -->
+
+  <!-- =========================
+       BASIC META / SEO
+       ========================= -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#1a0b0b" />
+  <title>Alexander’s Restaurant | Ambridge, PA</title>
+  <meta
+    name="description"
+    content="Alexander’s Restaurant in historic Ambridge, PA. Family tradition, fresh seafood & meats, events, private parties, wedding rehearsal dinners, and funeral luncheons."
+  />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Alexander’s Restaurant | Ambridge, PA" />
+  <meta property="og:description" content="A timeless dining experience in historic Ambridge." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og.jpg" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- =========================
+       PREFETCH / PERFORMANCE
+       (No external fonts—keeps it simple and fast.)
+       ========================= -->
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
+
+  <!-- =========================
+       PAGE NOTES (READ ME)
+       =========================
+       1) Put this file as /index.html in your repo root.
+       2) Create an /images folder and add:
+          - exterior.jpg     (front photo)
+          - dining.jpg       (dining room)
+          - plate.jpg        (food plate)
+          - texture-paper.jpg (optional paper texture)
+          - texture-grain.png (optional grain overlay)
+          - og.jpg (optional social preview)
+       3) NAV IS MULTI-PAGE READY:
+          Create these later in same folder:
+            events.html
+            menus.html
+            weddings.html
+            private-parties.html
+            funeral-luncheons.html
+            map.html
+            contact.html
+       4) Everything is inline here so it’s easy to deploy.
+       ========================= -->
+
+  <style>
+    /* =========================================================
+       DESIGN SYSTEM — Upscaled Classic
+       ========================================================= */
+
+    /* ------------- Root Vars ------------- */
+    :root{
+      /* Brand palette (classic, upscale) */
+      --wine-900:#1a0707;
+      --wine-850:#220909;
+      --wine-800:#2b0b0b;
+      --wine-700:#4b0f10;
+      --wine-650:#5b1416;
+      --paper:#f4f0e8;
+      --paper-2:#f8f4ee;
+      --ink:#141214;
+      --muted:#403b3b;
+      --muted-2:#5a5353;
+
+      /* Gold accents (modernized) */
+      --gold-1:#fff2c7;
+      --gold-2:#e6c77a;
+      --gold-3:#b98a2f;
+      --gold-4:#7a540e;
+
+      /* Neutral UI */
+      --black:#000;
+      --white:#fff;
+      --line:rgba(0,0,0,.18);
+      --line2:rgba(255,255,255,.14);
+
+      /* Layout */
+      --max: 1040px;
+      --pad: 18px;
+      --radius: 14px;
+
+      /* Effects */
+      --shadow-1: 0 18px 65px rgba(0,0,0,.55);
+      --shadow-2: 0 10px 30px rgba(0,0,0,.25);
+      --shadow-3: 0 4px 16px rgba(0,0,0,.18);
+
+      /* Motion */
+      --ease: cubic-bezier(.2,.85,.2,1);
+      --t: 160ms var(--ease);
+    }
+
+    /* ------------- Global Reset ------------- */
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      color:var(--ink);
+      line-height:1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+
+      /* Deep wine gradient background like original, but richer */
+      background:
+        radial-gradient(1100px 540px at 50% 10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(900px 480px at 80% 0%, rgba(255,242,199,.08), transparent 58%),
+        radial-gradient(circle at 50% 18%, var(--wine-650), var(--wine-850) 62%, var(--wine-900) 100%);
+    }
+
+    img{ max-width:100%; display:block; }
+    a{ color:inherit; }
+    button, input, textarea{ font:inherit; }
+
+    /* ------------- Helper Wrappers ------------- */
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 16px;
+    }
+
+    .sr-only{
+      position:absolute;
+      width:1px;height:1px;
+      padding:0;margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
+    /* =========================================================
+       TOP STRIP / NAV (two bars like the original, but refined)
+       ========================================================= */
+
+    .topbar{
+      background: linear-gradient(180deg, #000, rgba(0,0,0,.92));
+      border-bottom:1px solid var(--line2);
+      position:sticky;
+      top:0;
+      z-index:50;
+      box-shadow: 0 14px 36px rgba(0,0,0,.35);
+    }
+
+    .topbar .inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.20);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,242,199,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
+      display:grid;
+      place-items:center;
+      box-shadow: var(--shadow-3);
+    }
+
+    .brand-badge span{
+      font-weight:800;
+      color:transparent;
+      background: linear-gradient(180deg, var(--gold-1), var(--gold-2), var(--gold-3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      font-size:16px;
+      letter-spacing:.5px;
+      text-shadow: 0 10px 18px rgba(0,0,0,.60);
+    }
+
+    .brand-text{
+      color:#fff;
+      line-height:1.05;
+    }
+
+    .brand-text .name{
+      font-weight:700;
+      letter-spacing:.35px;
+      font-size:15px;
+      text-transform:uppercase;
+    }
+
+    .brand-text .sub{
+      font-size:12px;
+      color:rgba(255,255,255,.72);
+      margin-top:2px;
+    }
+
+    /* Nav links */
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:14px 18px;
+      padding:0;
+      margin:0;
+      list-style:none;
+    }
+
+    .nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      font-size:12.5px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      padding:6px 2px;
+      opacity:.92;
+      transition: opacity var(--t), transform var(--t);
+      white-space:nowrap;
+    }
+
+    .nav a:hover{
+      opacity:1;
+      text-decoration:underline;
+      transform: translateY(-1px);
+    }
+
+    /* Right actions (phone, reserve) */
+    .actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 240px;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      font-size:12.5px;
+      letter-spacing:.25px;
+      transition: background var(--t), transform var(--t), border-color var(--t);
+    }
+
+    .pill:hover{
+      background: rgba(255,255,255,.10);
+      transform: translateY(-1px);
+      border-color: rgba(255,242,199,.35);
+    }
+
+    .pill.gold{
+      border-color: rgba(230,199,122,.55);
+      background:
+        linear-gradient(135deg, rgba(230,199,122,.28), rgba(255,255,255,.06));
+    }
+
+    .hamburger{
+      display:none;
+      align-items:center;
+      justify-content:center;
+      width:40px;height:40px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      cursor:pointer;
+    }
+
+    .hamburger:active{ transform: scale(.98); }
+
+    /* Mobile nav drawer */
+    .drawer{
+      display:none;
+      border-top:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.96);
+    }
+
+    .drawer .nav{
+      padding:12px 0 14px;
+      justify-content:flex-start;
+      gap:10px 16px;
+    }
+
+    /* =========================================================
+       MAIN PANEL (paper card centered like original)
+       ========================================================= */
+
+    .panel{
+      max-width:var(--max);
+      margin: 18px auto 10px;
+      border:2px solid rgba(0,0,0,.88);
+      background:
+        /* Optional subtle paper texture */
+        radial-gradient(1000px 520px at 20% 0%, rgba(0,0,0,.06), transparent 60%),
+        radial-gradient(900px 520px at 80% 15%, rgba(0,0,0,.045), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.20)),
+        var(--paper);
+      box-shadow: var(--shadow-1);
+      overflow:hidden;
+    }
+
+    /* Top "paper" heading strip */
+    .paper-head{
+      padding: 18px 22px 10px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .paper-title{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+
+    .paper-title em{
+      font-style:italic;
+      font-weight:700;
+    }
+
+    .paper-kicker{
+      margin:4px 0 0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .paper-badge{
+      text-align:right;
+      min-width: 220px;
+    }
+
+    .stars{
+      display:inline-flex;
+      gap:4px;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .star{
+      width:16px;height:16px;
+      display:inline-block;
+      background:
+        conic-gradient(from 0deg, var(--gold-2), var(--gold-3), var(--gold-1), var(--gold-2));
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/%3E%3C/svg%3E") center/contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/%3E%3C/svg%3E") center/contain no-repeat;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+    }
+
+    .badge-line{
+      margin-top:6px;
+      color:var(--muted-2);
+      font-size:12.5px;
+    }
+
+    .divider{
+      height:1px;
+      background: rgba(0,0,0,.18);
+      margin: 0 22px;
+    }
+
+    /* =========================================================
+       HERO / STORY (inspired by original but modern)
+       ========================================================= */
+
+    .hero{
+      padding: 20px 22px 6px;
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    /* Photo card */
+    .photo-card{
+      border:1px solid rgba(0,0,0,.18);
+      background: rgba(255,255,255,.55);
+      padding: 12px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .photo-frame{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.16);
+      background: #ddd;
+    }
+
+    .photo-frame img{
+      width:100%;
+      height:auto;
+      display:block;
+      transform: scale(1.02);
+    }
+
+    .photo-overlay{
+      position:absolute;
+      inset:auto 0 0 0;
+      padding: 10px 10px 10px;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.72));
+      color:#fff;
+      font-size:12.5px;
+      letter-spacing:.2px;
+      text-shadow: 0 10px 18px rgba(0,0,0,.60);
+    }
+
+    .photo-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-top:10px;
+      color:var(--muted-2);
+      font-size:12.5px;
+    }
+
+    .meta-pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.14);
+      background: rgba(255,255,255,.55);
+      font-weight:700;
+      color:#2a2626;
+    }
+
+    .meta-pill small{
+      font-weight:600;
+      color:var(--muted-2);
+    }
+
+    /* Story text */
+    .story p{
+      margin:0 0 12px;
+      font-size:15px;
+      color:#282424;
+    }
+
+    .story p strong{
+      font-weight:700;
+    }
+
+    .story em{
+      font-style:italic;
+      font-weight:700;
+    }
+
+    .signature{
+      margin-top: 12px;
+      text-align:right;
+      font-style: italic;
+      color:#2a2626;
+      font-size:14px;
+    }
+
+    /* Quick links grid */
+    .quick-grid{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .quick{
+      border:1px solid rgba(0,0,0,.14);
+      background: rgba(255,255,255,.62);
+      padding: 10px 10px;
+      box-shadow: var(--shadow-3);
+    }
+
+    .quick b{
+      display:block;
+      font-size:13px;
+      letter-spacing:.2px;
+      margin-bottom:4px;
+    }
+
+    .quick span{
+      display:block;
+      color:var(--muted-2);
+      font-size:12.5px;
+    }
+
+    .quick a{
+      color:#1c1a1a;
+      text-decoration:none;
+    }
+
+    .quick a:hover{
+      text-decoration:underline;
+    }
+
+    /* =========================================================
+       FEATURE ROW (upgraded “Good to know”)
+       ========================================================= */
+
+    .features{
+      padding: 12px 22px 18px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .feature{
+      border:1px solid rgba(0,0,0,.14);
+      background: rgba(255,255,255,.58);
+      padding: 12px 12px;
+      box-shadow: var(--shadow-3);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .feature::before{
+      content:"";
+      position:absolute;
+      inset:-40% -20% auto -20%;
+      height:120px;
+      background: radial-gradient(circle at 30% 50%, rgba(230,199,122,.22), transparent 60%);
+      transform: rotate(-8deg);
+      pointer-events:none;
+    }
+
+    .feature b{
+      display:block;
+      font-size:13px;
+      letter-spacing:.2px;
+      margin-bottom:4px;
+    }
+
+    .feature span{
+      display:block;
+      color:var(--muted-2);
+      font-size:12.5px;
+    }
+
+    /* =========================================================
+       SECTION BLOCKS (Menus / Events / Parties / Funeral)
+       ========================================================= */
+
+    .section{
+      padding: 16px 22px 2px;
+    }
+
+    .section h2{
+      margin: 0 0 8px;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+
+    .section p{
+      margin: 0 0 12px;
+      color:var(--muted-2);
+      font-size:13.8px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card{
+      border:1px solid rgba(0,0,0,.14);
+      background: rgba(255,255,255,.62);
+      box-shadow: var(--shadow-3);
+      overflow:hidden;
+    }
+
+    .card .card-top{
+      padding: 12px 12px 10px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom: 1px solid rgba(0,0,0,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
+    }
+
+    .card .card-top b{
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+
+    .tag{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      padding: 5px 8px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.14);
+      background: rgba(255,255,255,.65);
+      color:#2a2626;
+      white-space:nowrap;
+    }
+
+    .card .card-body{
+      padding: 12px;
+      color:#2a2626;
+      font-size:13.6px;
+    }
+
+    .list{
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color:#2f2a2a;
+    }
+
+    .list li{
+      margin: 5px 0;
+    }
+
+    .card .card-footer{
+      padding: 10px 12px 12px;
+      border-top: 1px solid rgba(0,0,0,.12);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-start;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border:1px solid rgba(0,0,0,.16);
+      background: rgba(255,255,255,.75);
+      box-shadow: var(--shadow-3);
+      font-weight:800;
+      font-size:12.5px;
+      letter-spacing:.25px;
+      text-decoration:none;
+      transition: transform var(--t), background var(--t);
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.92);
+    }
+
+    .btn.gold{
+      border-color: rgba(185,138,47,.45);
+      background:
+        linear-gradient(135deg, rgba(230,199,122,.32), rgba(255,255,255,.70));
+    }
+
+    /* =========================================================
+       MENU HIGHLIGHTS TABLE (looks “complex” + polished)
+       ========================================================= */
+
+    .menu-table{
+      border:1px solid rgba(0,0,0,.16);
+      background: rgba(255,255,255,.58);
+      box-shadow: var(--shadow-3);
+      margin: 12px 0 14px;
+      overflow:hidden;
+    }
+
+    .menu-row{
+      display:grid;
+      grid-template-columns: 1.2fr 2.1fr .7fr;
+      gap: 10px;
+      padding: 12px 12px;
+      border-top: 1px solid rgba(0,0,0,.12);
+      align-items:start;
+    }
+
+    .menu-row:first-child{
+      border-top:none;
+    }
+
+    .menu-row .name{
+      font-weight:800;
+      letter-spacing:.15px;
+    }
+
+    .menu-row .desc{
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .menu-row .price{
+      text-align:right;
+      font-weight:900;
+      color:#2a2626;
+    }
+
+    .menu-head{
+      padding: 12px 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.55));
+      border-bottom:1px solid rgba(0,0,0,.12);
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:12px;
+    }
+
+    .menu-head b{
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+
+    .menu-head span{
+      color:var(--muted-2);
+      font-size:12.5px;
+    }
+
+    /* =========================================================
+       GALLERY STRIP (3 images like “photo row”)
+       ========================================================= */
+
+    .gallery{
+      padding: 8px 22px 18px;
+    }
+
+    .gallery-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .9fr .9fr;
+      gap: 12px;
+    }
+
+    .g{
+      border:1px solid rgba(0,0,0,.16);
+      background: rgba(255,255,255,.55);
+      box-shadow: var(--shadow-3);
+      overflow:hidden;
+      position:relative;
+      min-height: 180px;
+    }
+
+    .g.big{ min-height: 240px; }
+
+    .g img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.01);
+    }
+
+    .g .cap{
+      position:absolute;
+      inset:auto 0 0 0;
+      padding: 10px 10px;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.72));
+      color:#fff;
+      font-size:12.5px;
+      letter-spacing:.2px;
+      text-shadow: 0 10px 18px rgba(0,0,0,.60);
+    }
+
+    /* =========================================================
+       CONTACT + MAP PANEL (complex but clean)
+       ========================================================= */
+
+    .contact{
+      padding: 16px 22px 18px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 12px;
+    }
+
+    .box{
+      border:1px solid rgba(0,0,0,.16);
+      background: rgba(255,255,255,.62);
+      box-shadow: var(--shadow-3);
+      padding: 12px;
+      overflow:hidden;
+    }
+
+    .box h3{
+      margin:0 0 8px;
+      font-size:15px;
+      letter-spacing:.2px;
+    }
+
+    .box p{
+      margin:0 0 10px;
+      color:var(--muted-2);
+      font-size:13.5px;
+    }
+
+    .kv{
+      display:grid;
+      grid-template-columns: 110px 1fr;
+      gap: 8px 10px;
+      font-size:13.5px;
+      color:#2a2626;
+    }
+
+    .kv b{
+      color:#141214;
+    }
+
+    .kv a{ text-decoration:none; }
+    .kv a:hover{ text-decoration:underline; }
+
+    /* Form */
+    form{
+      display:grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    label{
+      font-size:12.5px;
+      font-weight:800;
+      letter-spacing:.15px;
+      color:#2a2626;
+      display:block;
+      margin-bottom: 4px;
+    }
+
+    input, textarea, select{
+      width:100%;
+      padding: 10px 10px;
+      border-radius: 10px;
+      border:1px solid rgba(0,0,0,.16);
+      background: rgba(255,255,255,.78);
+      outline:none;
+    }
+
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(185,138,47,.55);
+      box-shadow: 0 0 0 4px rgba(230,199,122,.22);
+    }
+
+    textarea{
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .two{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .map-embed{
+      width:100%;
+      height: 300px;
+      border: 0;
+      border-radius: 12px;
+      overflow:hidden;
+      background: #eee;
+    }
+
+    /* =========================================================
+       FOOTER (inside panel, like original info row + nav)
+       ========================================================= */
+
+    .info-row{
+      padding: 12px 16px 16px;
+      border-top: 1px solid rgba(0,0,0,.18);
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap: 10px 22px;
+      color:#222;
+      font-size: 13px;
+      background: rgba(255,255,255,.40);
+    }
+
+    .info-row span{
+      white-space:nowrap;
+    }
+
+    .bottombar{
+      background: linear-gradient(180deg, #000, rgba(0,0,0,.92));
+      border-top:1px solid var(--line2);
+      margin-top: 2px;
+    }
+
+    .bottombar .inner{
+      padding: 10px 0;
+    }
+
+    /* =========================================================
+       BIG GOLD TITLE (outside panel) — iconic like original
+       ========================================================= */
+
+    .gold-title{
+      max-width:var(--max);
+      margin: 10px auto 18px;
+      text-align:center;
+      font-size: 46px;
+      font-weight: 800;
+      letter-spacing:.6px;
+      user-select:none;
+
+      color: transparent;
+      background: linear-gradient(180deg, var(--gold-1), var(--gold-2), var(--gold-3), var(--gold-4));
+      -webkit-background-clip:text;
+      background-clip:text;
+
+      text-shadow:
+        0 14px 34px rgba(0,0,0,.70),
+        0 2px 0 rgba(0,0,0,.30);
+    }
+
+    .gold-sub{
+      max-width:var(--max);
+      margin: -6px auto 20px;
+      text-align:center;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+      letter-spacing:.25px;
+    }
+
+    /* =========================================================
+       STICKY MOBILE ACTIONS (call / directions / reserve)
+       ========================================================= */
+
+    .sticky{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      background: rgba(0,0,0,.86);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.14);
+      z-index:60;
+      display:none;
+    }
+
+    .sticky .sgrid{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 10px 12px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .sticky a{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 12px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      text-decoration:none;
+      font-weight:900;
+      letter-spacing:.25px;
+      font-size: 13px;
+    }
+
+    /* =========================================================
+       RESPONSIVE RULES
+       ========================================================= */
+
+    @media (max-width: 980px){
+      .actions{ min-width:auto; }
+      .brand{ min-width:auto; }
+      .hero{ grid-template-columns: 1fr; }
+      .features{ grid-template-columns: 1fr 1fr; }
+      .cards{ grid-template-columns: 1fr; }
+      .gallery-grid{ grid-template-columns: 1fr; }
+      .contact{ grid-template-columns: 1fr; }
+      .sticky{ display:block; }
+      .paper-badge{ display:none; }
+    }
+
+    @media (max-width: 720px){
+      .nav{ display:none; }
+      .hamburger{ display:inline-flex; }
+      .drawer{ display:block; }
+      .quick-grid{ grid-template-columns: 1fr; }
+      .features{ grid-template-columns: 1fr; }
+      .two{ grid-template-columns: 1fr; }
+      .gold-title{ font-size: 36px; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- =========================================================
+       TOPBAR (Sticky)
+       ========================================================= -->
+  <header class="topbar" role="banner">
+    <div class="wrap">
+      <div class="inner">
+        <!-- Brand -->
+        <a class="brand" href="index.html" aria-label="Alexander’s Home">
+          <div class="brand-badge" aria-hidden="true"><span>A</span></div>
+          <div class="brand-text">
+            <div class="name">Alexander’s Restaurant</div>
+            <div class="sub">Historic Ambridge, Pennsylvania</div>
+          </div>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav aria-label="Primary">
+          <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="menus.html">Menus</a></li>
+            <li><a href="weddings.html">Wedding Rehearsal Dinners</a></li>
+            <li><a href="private-parties.html">Private Parties</a></li>
+            <li><a href="funeral-luncheons.html">Funeral Luncheons</a></li>
+            <li><a href="map.html">Map</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="actions">
+          <a class="pill" href="tel:+17242663115" aria-label="Call Alexander’s">
+            📞 <span>(724) 266-3115</span>
+          </a>
+          <a class="pill gold" href="menus.html" aria-label="View Menus">
+            🍽️ <span>View Menus</span>
+          </a>
+          <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+            ☰
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Drawer -->
+      <div class="drawer" id="drawer" hidden>
+        <nav aria-label="Mobile">
+          <ul class="nav" style="display:flex;">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="menus.html">Menus</a></li>
+            <li><a href="weddings.html">Wedding Rehearsal Dinners</a></li>
+            <li><a href="private-parties.html">Private Parties</a></li>
+            <li><a href="funeral-luncheons.html">Funeral Luncheons</a></li>
+            <li><a href="map.html">Map</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       MAIN PANEL (Paper)
+       ========================================================= -->
+  <main class="panel" role="main">
+    <!-- Paper Head -->
+    <section class="paper-head" aria-label="Welcome header">
+      <div>
+        <h1 class="paper-title">
+          Welcome to <em>Alexander’s Restaurant</em>
+        </h1>
+        <p class="paper-kicker">
+          Family tradition • Fresh seafood & meats • Ambridge, PA
+        </p>
+      </div>
+
+      <!-- Right badge (desktop only) -->
+      <div class="paper-badge" aria-label="Highlights">
+        <div class="stars" aria-hidden="true">
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star" style="opacity:.55"></span>
+        </div>
+        <div class="badge-line">Reservations • Buffet • Cards Accepted</div>
+        <div class="badge-line">720 Merchant Street • Ambridge, PA</div>
+      </div>
+    </section>
+
+    <div class="divider" role="presentation"></div>
+
+    <!-- =========================================================
+         HERO / STORY (Original content, upscale layout)
+         ========================================================= -->
+    <section class="hero" aria-label="Story and photo">
+      <!-- Photo -->
+      <aside class="photo-card" aria-label="Photo">
+        <div class="photo-frame">
+          <!-- Put an image at images/exterior.jpg -->
+          <img
+            src="images/exterior.jpg"
+            alt="Alexander’s Restaurant exterior"
+            onerror="this.closest('.photo-frame').style.background='#e3ded6'; this.style.display='none';"
+          />
+          <div class="photo-overlay">
+            Alexander’s Restaurant • Established family tradition • Ambridge, PA
+          </div>
+        </div>
+
+        <div class="photo-meta">
+          <span class="meta-pill">🕒 <span>Mon–Sat</span> <small>11am–10pm</small></span>
+          <span class="meta-pill">📍 <span>720 Merchant</span> <small>15003</small></span>
+        </div>
+
+        <div class="photo-meta" style="margin-top:8px;">
+          <span class="meta-pill">💳 <span>Major Cards</span> <small>Accepted</small></span>
+          <span class="meta-pill">✅ <span>Reservations</span> <small>Available</small></span>
+        </div>
+      </aside>
+
+      <!-- Story -->
+      <article class="story" aria-label="Welcome message">
+        <p>
+          Welcome to <strong><em>Alexander’s Restaurant</em></strong> located in historic Ambridge,
+          owned by William and Kay Barlamas.
+        </p>
+
+        <p>
+          Ambridge is a borough in Beaver County, located in Western Pennsylvania, incorporated in 1905,
+          and named after the American Bridge Company. Ambridge is 16 miles (25 km) northwest of Pittsburgh,
+          alongside the Ohio River.
+        </p>
+
+        <p>
+          The Barlamas family has been in the restaurant business in Ambridge since the early 1920’s.
+          On February 2, 1952, with the help of their children, <em>Barlamas’ Luncheonette</em> was opened.
+          In the early 1960’s they expanded into <em>Barlamas’ Restaurant</em> with the continuous support
+          and faith of their patrons.
+        </p>
+
+        <p>
+          After purchasing their present property at 720 Merchant Street during September 1981,
+          the Barlamas family started an enormous undertaking to completely change the format of the restaurant
+          creating <em>Alexander’s</em> in honor of their parents, Alexander and Constance, who founded the original luncheonette.
+        </p>
+
+        <p>
+          It is with a deep sense of pride in our parents that we welcome you to <em>Alexander’s</em> to enjoy
+          the finest quality of fresh seafood and meats in the greater Ambridge area. We are happy to serve you.
+        </p>
+
+        <div class="signature">Mr. and Mrs. William Barlamas</div>
+
+        <!-- Quick “complex” grid -->
+        <div class="quick-grid" aria-label="Quick info">
+          <div class="quick">
+            <b>Call</b>
+            <span><a href="tel:+17242663115">(724) 266-3115</a></span>
+          </div>
+
+          <div class="quick">
+            <b>Address</b>
+            <span>720 Merchant St, Ambridge, PA 15003</span>
+          </div>
+
+          <div class="quick">
+            <b>Directions</b>
+            <span><a href="https://maps.google.com/?q=720%20Merchant%20St%20Ambridge%20PA%2015003" target="_blank" rel="noopener">Open Google Maps</a></span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- =========================================================
+         FEATURES ROW
+         ========================================================= -->
+    <section class="features" aria-label="Good to know">
+      <div class="feature">
+        <b>Accepts Reservations</b>
+        <span>Plan ahead for dinners, groups, and special occasions.</span>
+      </div>
+
+      <div class="feature">
+        <b>Buffet Options</b>
+        <span>Ask about buffet availability and event dining packages.</span>
+      </div>
+
+      <div class="feature">
+        <b>Major Cards Accepted</b>
+        <span>Convenient payment options for guests.</span>
+      </div>
+
+      <div class="feature">
+        <b>Contactless Payments</b>
+        <span>Fast checkout options available.</span>
+      </div>
+    </section>
+
+    <div class="divider" role="presentation"></div>
+
+    <!-- =========================================================
+         MENUS SECTION (teaser for menus.html)
+         ========================================================= -->
+    <section class="section" aria-label="Menus preview">
+      <h2>Menus</h2>
+      <p>
+        Our kitchen focuses on quality seafood, meats, and classic favorites.
+        Below are example highlights—replace with real items on <b>menus.html</b>.
+      </p>
+
+      <!-- Menu table -->
+      <div class="menu-table" role="table" aria-label="Menu highlights">
+        <div class="menu-head">
+          <b>House Highlights</b>
+          <span>Sample items — update with real offerings</span>
+        </div>
+
+        <div class="menu-row" role="row">
+          <div class="name" role="cell">Fresh Seafood</div>
+          <div class="desc" role="cell">Seasonal selections featuring classic preparations.</div>
+          <div class="price" role="cell">Market</div>
+        </div>
+
+        <div class="menu-row" role="row">
+          <div class="name" role="cell">Hand-Cut Steaks</div>
+          <div class="desc" role="cell">Hearty portions, cooked to your preference.</div>
+          <div class="price" role="cell">$24+</div>
+        </div>
+
+        <div class="menu-row" role="row">
+          <div class="name" role="cell">Comfort Classics</div>
+          <div class="desc" role="cell">Traditional favorites and daily specials.</div>
+          <div class="price" role="cell">$12+</div>
+        </div>
+
+        <div class="menu-row" role="row">
+          <div class="name" role="cell">Dessert & Coffee</div>
+          <div class="desc" role="cell">Finish your meal with something sweet.</div>
+          <div class="price" role="cell">$6+</div>
+        </div>
+      </div>
+
+      <!-- Cards row -->
+      <div class="cards" aria-label="Menu info cards">
+        <div class="card">
+          <div class="card-top">
+            <b>Lunch & Dinner</b>
+            <span class="tag">Daily</span>
+          </div>
+          <div class="card-body">
+            Browse menu categories, specials, and seasonal selections.
+            <ul class="list">
+              <li>Seafood & steaks</li>
+              <li>Classic comfort dishes</li>
+              <li>Family-friendly dining</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="btn gold" href="menus.html">View Menus</a>
+            <a class="btn" href="contact.html">Ask a Question</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <b>Special Events Dining</b>
+            <span class="tag">Groups</span>
+          </div>
+          <div class="card-body">
+            We offer flexible options for gatherings and celebrations.
+            <ul class="list">
+              <li>Buffet availability</li>
+              <li>Custom menus</li>
+              <li>Dedicated service</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="btn gold" href="private-parties.html">Private Parties</a>
+            <a class="btn" href="events.html">See Events</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <b>Reservations</b>
+            <span class="tag">Easy</span>
+          </div>
+          <div class="card-body">
+            Prefer to reserve by phone? Call and we’ll confirm quickly.
+            <ul class="list">
+              <li>Call: (724) 266-3115</li>
+              <li>Hours: Mon–Sat 11–10</li>
+              <li>Location: 720 Merchant</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="btn gold" href="tel:+17242663115">Call Now</a>
+            <a class="btn" href="map.html">Directions</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" role="presentation"></div>
+
+    <!-- =========================================================
+         EVENTS / SERVICES SECTION
+         ========================================================= -->
+    <section class="section" aria-label="Events and services">
+      <h2>Events & Services</h2>
+      <p>
+        From rehearsal dinners to private parties, we provide a comfortable setting with attentive service.
+        Explore each area on its dedicated page later.
+      </p>
+
+      <div class="cards" aria-label="Service cards">
+        <div class="card">
+          <div class="card-top">
+            <b>Wedding Rehearsal Dinners</b>
+            <span class="tag">Weddings</span>
+          </div>
+          <div class="card-body">
+            Host your rehearsal dinner in a warm, classic dining atmosphere.
+            <ul class="list">
+              <li>Custom menu options</li>
+              <li>Seating arrangements</li>
+              <li>Professional service</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="btn gold" href="weddings.html">Learn More</a>
+            <a class="btn" href="contact.html">Request Info</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <b>Private Parties</b>
+            <span class="tag">Celebrations</span>
+          </div>
+          <div class="card-body">
+            Birthdays, anniversaries, and corporate meals—done right.
+            <ul class="list">
+              <li>Group dining</li>
+              <li>Buffet options</li>
+              <li>Flexible scheduling</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="btn gold" href="private-parties.html">Learn More</a>
+            <a class="btn" href="events.html">Upcoming Events</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <b>Funeral Luncheons</b>
+            <span class="tag">Respectful</span>
+          </div>
+          <div class="card-body">
+            A comfortable, respectful setting with attentive service.
+            <ul class="list">
+              <li>Simple planning</li>
+              <li>Private dining options</li>
+              <li>Custom menus available</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="btn gold" href="funeral-luncheons.html">Learn More</a>
+            <a class="btn" href="contact.html">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         GALLERY
+         ========================================================= -->
+    <section class="gallery" aria-label="Gallery">
+      <h2 style="margin:0 0 8px; font-size:18px; letter-spacing:.2px;">Gallery</h2>
+      <p style="margin:0 0 12px; color:var(--muted-2); font-size:13.8px;">
+        Add photos to your <b>/images</b> folder. These give the site the “professional” feel instantly.
+      </p>
+
+      <div class="gallery-grid">
+        <div class="g big">
+          <img
+            src="images/dining.jpg"
+            alt="Dining room"
+            onerror="this.style.display='none';"
+          />
+          <div class="cap">Classic dining room • warm atmosphere</div>
+        </div>
+
+        <div class="g">
+          <img
+            src="images/plate.jpg"
+            alt="Featured plate"
+            onerror="this.style.display='none';"
+          />
+          <div class="cap">Featured plates • comfort classics</div>
+        </div>
+
+        <div class="g">
+          <img
+            src="images/exterior.jpg"
+            alt="Restaurant exterior"
+            onerror="this.style.display='none';"
+          />
+          <div class="cap">Historic Ambridge • easy to find</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" role="presentation"></div>
+
+    <!-- =========================================================
+         CONTACT + MAP (complex + polished)
+         ========================================================= -->
+    <section class="contact" aria-label="Contact and map">
+      <!-- Left: Contact box -->
+      <div class="box">
+        <h3>Contact</h3>
+        <p>
+          Call us for reservations, menu questions, private parties, or event dining.
+        </p>
+
+        <div class="kv" role="list">
+          <b role="listitem">Phone</b>
+          <div role="listitem"><a href="tel:+17242663115">(724) 266-3115</a></div>
+
+          <b role="listitem">Address</b>
+          <div role="listitem">720 Merchant Street, Ambridge, PA 15003</div>
+
+          <b role="listitem">Hours</b>
+          <div role="listitem">Mon–Sat 11:00am – 10:00pm • Sun Closed (except special events)</div>
+
+          <b role="listitem">Website</b>
+          <div role="listitem"><a href="https://alexandersinambridge.com" target="_blank" rel="noopener">alexandersinambridge.com</a></div>
+        </div>
+
+        <form id="contactForm">
+          <div class="two">
+            <div>
+              <label for="cname">Name</label>
+              <input id="cname" name="name" placeholder="Your name" required />
+            </div>
+
+            <div>
+              <label for="cphone">Phone</label>
+              <input id="cphone" name="phone" placeholder="(724) 555-1234" required />
+            </div>
+          </div>
+
+          <div class="two">
+            <div>
+              <label for="ctype">Inquiry Type</label>
+              <select id="ctype" name="type">
+                <option value="Reservation">Reservation</option>
+                <option value="Menus">Menus</option>
+                <option value="Private Party">Private Party</option>
+                <option value="Wedding Rehearsal Dinner">Wedding Rehearsal Dinner</option>
+                <option value="Funeral Luncheon">Funeral Luncheon</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="cwhen">Preferred Date</label>
+              <input id="cwhen" name="when" type="date" />
+            </div>
+          </div>
+
+          <div>
+            <label for="cmsg">Message</label>
+            <textarea id="cmsg" name="message" placeholder="Tell us what you need..."></textarea>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn gold" type="submit">Send Message</button>
+            <a class="btn" href="map.html">Open Map Page</a>
+            <a class="btn" href="contact.html">Full Contact Page</a>
+          </div>
+
+          <p style="margin:6px 0 0; color:var(--muted-2); font-size:12.5px;">
+            This form opens your email app for now (easy upgrade to real submissions later).
+          </p>
+        </form>
+      </div>
+
+      <!-- Right: Map box -->
+      <div class="box">
+        <h3>Find Us</h3>
+        <p>
+          Convenient location in Ambridge. Tap “Directions” for Google Maps navigation.
+        </p>
+
+        <!-- Embedded map (works without API key) -->
+        <iframe
+          class="map-embed"
+          title="Map to Alexander’s Restaurant"
+          src="https://maps.google.com/maps?q=720%20Merchant%20St%20Ambridge%20PA%2015003&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+          <a class="btn gold" href="https://maps.google.com/?q=720%20Merchant%20St%20Ambridge%20PA%2015003" target="_blank" rel="noopener">
+            📍 Directions
+          </a>
+          <a class="btn" href="tel:+17242663115">
+            📞 Call
+          </a>
+        </div>
+
+        <div style="margin-top:10px; color:var(--muted-2); font-size:12.5px;">
+          Tip: On <b>map.html</b> later, you can add parking notes, landmarks, and a bigger embed.
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         INFO ROW (like original footer line)
+         ========================================================= -->
+    <footer class="info-row" aria-label="Footer info">
+      <span><b>Alexander’s Restaurant</b></span>
+      <span>720 Merchant Street</span>
+      <span>Ambridge, PA 15003</span>
+      <span><a href="tel:+17242663115">724-266-3115</a></span>
+      <span>Hours: Monday–Saturday: 11:00am – 10:00pm</span>
+      <span>Sunday: Closed (except special holidays & events)</span>
+      <span>Major Credit Cards Accepted</span>
+    </footer>
+
+    <!-- =========================================================
+         BOTTOM NAV (like original)
+         ========================================================= -->
+    <div class="bottombar" aria-label="Bottom navigation">
+      <div class="wrap">
+        <div class="inner">
+          <nav aria-label="Secondary">
+            <ul class="nav" style="display:flex;">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li><a href="menus.html">Menus</a></li>
+              <li><a href="weddings.html">Wedding Rehearsal Dinners</a></li>
+              <li><a href="private-parties.html">Private Parties</a></li>
+              <li><a href="funeral-luncheons.html">Funeral Luncheons</a></li>
+              <li><a href="map.html">Map</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================
+       GOLD TITLE (outside panel, iconic)
+       ========================================================= -->
+  <div class="gold-title" aria-hidden="true">Alexander’s Restaurant</div>
+  <div class="gold-sub">Classic dining • Historic Ambridge • Family tradition</div>
+
+  <!-- =========================================================
+       MOBILE STICKY ACTION BAR
+       ========================================================= -->
+  <div class="sticky" aria-label="Quick actions">
+    <div class="sgrid">
+      <a href="tel:+17242663115">📞 Call</a>
+      <a href="https://maps.google.com/?q=720%20Merchant%20St%20Ambridge%20PA%2015003" target="_blank" rel="noopener">📍 Directions</a>
+      <a href="menus.html">🍽️ Menus</a>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // Mobile Menu Toggle
+    // =========================================================
+    (function(){
+      const btn = document.getElementById("hamburger");
+      const drawer = document.getElementById("drawer");
+      if(!btn || !drawer) return;
+
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!expanded));
+        drawer.hidden = expanded;
+      });
+    })();
+
+    // =========================================================
+    // Contact Form: mailto (simple now, upgrade later)
+    // =========================================================
+    (function(){
+      const form = document.getElementById("contactForm");
+      if(!form) return;
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const fd = new FormData(form);
+        const data = Object.fromEntries(fd.entries());
+
+        const subject = encodeURIComponent("Alexander’s Website Inquiry — " + (data.type || "Message"));
+        const body = encodeURIComponent(
+`Inquiry Type: ${data.type || "—"}
+Name: ${data.name || "—"}
+Phone: ${data.phone || "—"}
+Preferred Date: ${data.when || "—"}
+
+Message:
+${data.message || "—"}
+
+Sent from Alexander’s website (index.html).`
+        );
+
+        // Change this later to the real restaurant email if desired:
+        const to = "info@alexandersinambridge.com";
+
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      });
+    })();
+  </script>
+
+  <!-- =========================================================
+       END OF FILE
+       ========================================================= -->
+</body>
+</html>
